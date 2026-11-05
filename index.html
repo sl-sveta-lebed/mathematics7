@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Алгебра — 7 клас</title>
+
+<style>
+:root{
+--blue:#4778ed;
+--purple:#8055d9;
+--bg:#f3f5fb;
+--white:#fff;
+--text:#26334a;
+--muted:#8993a6;
+--green:#22a879;
+--red:#e45b65;
+--border:#e7eaf2;
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:var(--bg);
+color:var(--text);
+height:100vh;
+overflow:hidden;
+}
+
+button{font-family:inherit;cursor:pointer}
+
+.app{
+display:flex;
+height:100vh;
+width:100%;
+overflow:hidden;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:285px;
+background:#fff;
+border-right:1px solid var(--border);
+display:flex;
+flex-direction:column;
+flex-shrink:0;
+z-index:20;
+}
+
+.logo{
+padding:23px 20px;
+background:linear-gradient(135deg,#4778ed,#8055d9);
+color:white;
+}
+
+.logo h2{margin:0;font-size:21px}
+.logo p{margin:7px 0 0;font-size:12px;opacity:.85}
+
+.menu-title{
+padding:17px 18px 8px;
+font-size:11px;
+font-weight:bold;
+color:var(--muted);
+text-transform:uppercase;
+}
+
+.module-list{
+overflow-y:auto;
+padding:5px 10px 20px;
+flex:1;
+}
+
+.module-btn{
+width:100%;
+border:0;
+background:white;
+padding:12px;
+margin-bottom:5px;
+border-radius:10px;
+text-align:left;
+display:flex;
+align-items:center;
+gap:10px;
+color:var(--text);
+font-size:13px;
+}
+
+.module-btn:hover{background:#f1f4ff}
+
+.module-btn.active{
+background:#edf1ff;
+color:var(--blue);
+font-weight:bold;
+}
+
+.module-num{
+width:29px;
+height:29px;
+border-radius:9px;
+background:#edf1ff;
+display:grid;
+place-items:center;
+flex-shrink:0;
+font-weight:bold;
+}
+
+.module-btn.active .module-num{
+background:var(--blue);
+color:white;
+}
+
+.progress-box{
+padding:15px;
+border-top:1px solid var(--border);
+font-size:12px;
+}
+
+.progress-line{
+height:7px;
+background:#edf0f6;
+border-radius:10px;
+margin-top:9px;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+background:var(--green);
+width:0%;
+transition:.3s;
+}
+
+/* MAIN */
+
+.main{
+flex:1;
+min-width:0;
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+
+.topbar{
+height:65px;
+background:white;
+border-bottom:1px solid var(--border);
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 24px;
+flex-shrink:0;
+}
+
+.top-left{
+display:flex;
+align-items:center;
+gap:13px;
+}
+
+.topbar h3{font-size:16px;margin:0}
+
+.top-actions{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.score{
+background:#fff5dc;
+color:#b17a17;
+padding:9px 13px;
+border-radius:10px;
+font-size:13px;
+font-weight:bold;
+}
+
+.menu-toggle{
+display:none;
+border:0;
+background:#edf1ff;
+color:var(--blue);
+border-radius:9px;
+padding:9px 12px;
+font-size:20px;
+}
+
+.content{
+flex:1;
+overflow-y:auto;
+padding:24px;
+}
+
+/* HOME */
+
+.welcome{
+background:linear-gradient(120deg,#4778ed,#8055d9);
+color:white;
+padding:30px;
+border-radius:20px;
+margin-bottom:24px;
+}
+
+.welcome h1{
+font-size:28px;
+margin:0 0 10px;
+}
+
+.welcome p{
+margin:0;
+line-height:1.6;
+opacity:.9;
+font-size:14px;
+}
+
+.section-heading{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin:22px 0 15px;
+}
+
+.section-heading h2{
+font-size:20px;
+margin:0;
+}
+
+.module-grid{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:15px;
+}
+
+.module-card{
+background:white;
+border:1px solid var(--border);
+border-radius:15px;
+padding:20px;
+cursor:pointer;
+transition:.2s;
+min-height:145px;
+}
+
+.module-card:hover{
+transform:translateY(-3px);
+box-shadow:0 8px 25px #26334a12;
+}
+
+.card-number{
+font-size:12px;
+font-weight:bold;
+color:var(--blue);
+margin-bottom:12px;
+}
+
+.module-card h3{
+font-size:16px;
+line-height:1.4;
+margin:0 0 10px;
+}
+
+.module-card p{
+font-size:12px;
+color:var(--muted);
+margin:0;
+}
+
+/* TOPIC PAGE */
+
+.back-btn{
+border:0;
+background:#e9edff;
+color:var(--blue);
+padding:10px 15px;
+border-radius:9px;
+font-weight:bold;
+margin-bottom:17px;
+}
+
+.topic-header{
+background:linear-gradient(120deg,#4778ed,#8055d9);
+padding:24px;
+border-radius:17px;
+color:white;
+margin-bottom:20px;
+}
+
+.topic-header h2{margin:0 0 8px;font-size:23px}
+.topic-header p{margin:0;font-size:13px;opacity:.9}
+
+.topic-list{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:12px;
+}
+
+.lesson-card{
+background:white;
+padding:17px;
+border-radius:13px;
+border:1px solid var(--border);
+display:flex;
+align-items:center;
+gap:13px;
+cursor:pointer;
+transition:.2s;
+}
+
+.lesson-card:hover{
+border-color:var(--blue);
+transform:translateY(-2px);
+}
+
+.lesson-number{
+width:38px;
+height:38px;
+border-radius:11px;
+background:#edf1ff;
+color:var(--blue);
+display:grid;
+place-items:center;
+font-weight:bold;
+flex-shrink:0;
+}
+
+.lesson-info{flex:1;min-width:0}
+
+.lesson-info h4{
+margin:0 0 6px;
+font-size:13px;
+line-height:1.4;
+}
+
+.lesson-info p{
+margin:0;
+font-size:11px;
+color:var(--muted);
+}
+
+.done-mark{
+color:var(--green);
+font-weight:bold;
+}
+
+/* LESSON */
+
+.lesson-title{
+font-size:23px;
+margin:0 0 18px;
+line-height:1.35;
+}
+
+.tabs{
+display:flex;
+gap:8px;
+margin-bottom:17px;
+flex-wrap:wrap;
+}
+
+.tab{
+border:0;
+background:white;
+color:#68748a;
+padding:11px 18px;
+border-radius:9px;
+font-size:13px;
+font-weight:bold;
+}
+
+.tab.active{
+background:var(--blue);
+color:white;
+}
+
+.lesson-panel{
+background:white;
+border:1px solid var(--border);
+border-radius:15px;
+padding:23px;
+min-height:270px;
+}
+
+.theory-text{
+font-size:15px;
+line-height:1.75;
+}
+
+.theory-text h3{
+font-size:18px;
+margin-top:0;
+}
+
+.formula{
+background:#f0f3ff;
+border-left:4px solid var(--blue);
+padding:14px;
+border-radius:8px;
+font-size:17px;
+font-weight:bold;
+margin:14px 0;
+}
+
+.example{
+background:#f0faf6;
+border-left:4px solid var(--green);
+padding:16px;
+border-radius:9px;
+line-height:1.8;
+}
+
+.task-counter{
+font-size:12px;
+color:var(--muted);
+margin-bottom:12px;
+}
+
+.question{
+font-size:18px;
+font-weight:bold;
+line-height:1.5;
+margin:12px 0 20px;
+}
+
+.answers{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:11px;
+}
+
+.answer{
+border:2px solid var(--border);
+background:white;
+padding:14px;
+border-radius:10px;
+text-align:left;
+font-size:14px;
+color:var(--text);
+transition:.2s;
+}
+
+.answer:hover{border-color:var(--blue)}
+
+.answer.selected{
+border-color:var(--blue);
+background:#edf1ff;
+}
+
+.answer.correct{
+border-color:var(--green);
+background:#eaf8f2;
+}
+
+.answer.wrong{
+border-color:var(--red);
+background:#fff0f0;
+}
+
+.feedback{
+padding:15px;
+border-radius:10px;
+margin-top:17px;
+font-size:14px;
+line-height:1.6;
+display:none;
+}
+
+.feedback.show{display:block}
+.feedback.good{background:#eaf8f2;color:#147b56}
+.feedback.bad{background:#fff0f0;color:#bd414a}
+
+.lesson-controls{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+margin-top:20px;
+}
+
+.btn{
+border:0;
+border-radius:10px;
+padding:12px 20px;
+font-weight:bold;
+font-size:13px;
+}
+
+.btn-primary{
+background:var(--blue);
+color:white;
+}
+
+.btn-secondary{
+background:#edf0f6;
+color:#536078;
+}
+
+.btn:disabled{
+opacity:.4;
+cursor:not-allowed;
+}
+
+input.task-input{
+width:100%;
+padding:14px;
+border:2px solid var(--border);
+border-radius:10px;
+font-size:17px;
+outline:none;
+}
+
+input.task-input:focus{border-color:var(--blue)}
+
+/* MODAL */
+
+.modal-bg{
+position:fixed;
+inset:0;
+background:#18233b88;
+display:none;
+align-items:center;
+justify-content:center;
+z-index:100;
+padding:15px;
+}
+
+.modal-bg.show{display:flex}
+
+.modal{
+background:white;
+width:100%;
+max-width:410px;
+padding:28px;
+border-radius:20px;
+text-align:center;
+}
+
+.modal-icon{font-size:43px}
+.modal h2{margin:12px 0}
+.modal p{color:#68748a;line-height:1.6}
+
+.result-number{
+font-size:35px;
+font-weight:bold;
+color:var(--blue);
+margin:17px 0;
+}
+
+/* MOBILE */
+
+.drawer-bg{
+display:none;
+position:fixed;
+inset:0;
+background:#18233b77;
+z-index:15;
+}
+
+@media(max-width:900px){
+.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:650px){
+
+.sidebar{
+position:fixed;
+left:-290px;
+top:0;
+bottom:0;
+transition:.25s;
+box-shadow:5px 0 20px #0002;
+}
+
+.sidebar.open{left:0}
+
+.drawer-bg.show{display:block}
+
+.menu-toggle{display:block}
+
+.topbar{
+height:58px;
+padding:0 12px;
+}
+
+.topbar h3{font-size:14px}
+
+.content{padding:13px}
+
+.welcome{
+padding:22px;
+border-radius:15px;
+}
+
+.welcome h1{font-size:23px}
+
+.module-grid{grid-template-columns:1fr}
+
+.topic-list{grid-template-columns:1fr}
+
+.lesson-title{font-size:20px}
+
+.lesson-panel{padding:16px}
+
+.answers{grid-template-columns:1fr}
+
+.question{font-size:16px}
+
+.score{font-size:11px;padding:8px}
+
+.lesson-controls .btn{
+padding:11px 12px;
+font-size:12px;
+}
+
+}
+
+@media(max-height:650px){
+.content{padding-top:12px;padding-bottom:12px}
+.welcome{padding:18px}
+.lesson-panel{padding:15px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar" id="sidebar">
+
+<div class="logo">
+<h2>📘 АЛГЕБРА</h2>
+<p>Інтерактивний курс · 7 клас</p>
+</div>
+
+<div class="menu-title">Навчальні модулі</div>
+
+<div class="module-list" id="moduleList"></div>
+
+<div class="progress-box">
+<div style="display:flex;justify-content:space-between">
+<b>Мій прогрес</b>
+<span id="progressText">0%</span>
+</div>
+<div class="progress-line">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+</div>
+
+</aside>
+
+<div class="drawer-bg" id="drawerBg" onclick="toggleMenu()"></div>
+
+<main class="main">
+
+<header class="topbar">
+<div class="top-left">
+<button class="menu-toggle" onclick="toggleMenu()">☰</button>
+<h3 id="topTitle">Головна сторінка</h3>
+</div>
+
+<div class="top-actions">
+<div class="score">⭐ <span id="totalScore">0</span> балів</div>
+</div>
+</header>
+
+<div class="content" id="content"></div>
+
+</main>
+</div>
+
+<div class="modal-bg" id="modalBg">
+<div class="modal">
+<div class="modal-icon" id="modalIcon">🎉</div>
+<h2 id="modalTitle">Урок завершено!</h2>
+<p id="modalText"></p>
+<div class="result-number" id="modalResult"></div>
+<button class="btn btn-primary" onclick="closeModal()">Продовжити</button>
+</div>
+</div>
+
+<script>
+
+/* =====================================================
+   ДАНІ КУРСУ
+===================================================== */
+
+const modules = [
+
+{
+title:"Алгебраїчні вирази. Рівняння з однією змінною",
+topics:[
+
+"Вступ до алгебри",
+"Лінійні рівняння з однією змінною",
+"Розв'язування текстових задач",
+"Тотожно рівні вирази. Тотожності",
+"Степінь з натуральним показником",
+"Властивості степеня з натуральним показником",
+"Одночлени",
+"Многочлени",
+"Додавання і віднімання многочленів",
+"Множення одночлена на многочлен",
+"Множення многочлена на многочлен",
+"Розкладання многочлена на множники. Винесення спільного множника за дужки",
+"Розкладання многочлена на множники. Метод групування",
+"Добуток різниці та суми двох виразів",
+"Різниця квадратів двох виразів",
+"Квадрат суми та квадрат різниці двох виразів",
+"Перетворення многочлена у квадрат суми або різниці двох виразів",
+"Сума й різниця кубів двох виразів",
+"Застосування різних способів розкладання многочлена на множники"
+
+]
+},
+
+{
+title:"Функції",
+topics:[
+"Зв'язки між величинами. Функція",
+"Способи задання функції",
+"Графік функції",
+"Лінійна функція, її графік і властивості"
+]
+},
+
+{
+title:"Системи лінійних рівнянь із двома змінними",
+topics:[
+"Рівняння з двома змінними",
+"Лінійне рівняння з двома змінними та його графік",
+"Системи рівнянь. Графічний метод",
+"Метод підстановки",
+"Метод додавання",
+"Розв'язування задач за допомогою систем рівнянь"
+]
+}
+
+];
+
+/* =====================================================
+   ТЕОРІЯ ТА ПРИКЛАДИ
+===================================================== */
+
+const theory = [
+
+[
+"Алгебра вивчає математичні вирази, рівняння, залежності між величинами та способи їх дослідження. На відміну від арифметики, в алгебрі використовують букви для позначення чисел.",
+"Буквений вираз — це запис, у якому числа поєднані зі змінними знаками математичних дій. Значення виразу залежить від значення змінної.",
+"Рівняння — це рівність, яка містить невідоме число. Розв'язати рівняння означає знайти всі його корені.",
+"Текстову задачу можна перекласти мовою математики за допомогою змінної. Спочатку позначають невідоме, потім складають вираз або рівняння.",
+"Тотожно рівні вирази мають однакові значення за всіх допустимих значень змінних.",
+"Степінь — це добуток однакових множників. Наприклад, a⁴=a·a·a·a.",
+"Під час множення степенів з однаковими основами показники додають. Під час ділення — віднімають.",
+"Одночлен — це добуток чисел, змінних та їх степенів. Стандартний вигляд одночлена передбачає один числовий коефіцієнт.",
+"Многочлен — це сума одночленів. Члени многочлена можуть містити різні змінні та степені.",
+"Щоб додати або відняти многочлени, потрібно розкрити дужки та звести подібні члени.",
+"Множення одночлена на многочлен виконують за розподільною властивістю: множник множать на кожен член многочлена.",
+"Щоб помножити два многочлени, кожен член першого множать на кожен член другого.",
+"Спільний множник можна винести за дужки. Це один із способів розкладання многочлена на множники.",
+"Метод групування полягає в об'єднанні членів многочлена в групи та винесенні спільних множників.",
+"Добуток суми та різниці двох виразів дорівнює різниці їх квадратів.",
+"Різниця квадратів розкладається на добуток суми та різниці тих самих виразів.",
+"Квадрат суми дорівнює квадрату першого виразу плюс подвоєний добуток виразів плюс квадрат другого.",
+"Повний квадрат тричлена можна розпізнати за формулою квадрата суми або різниці.",
+"Сума кубів дорівнює добутку суми виразів на неповний квадрат різниці. Різниця кубів — добутку різниці на неповний квадрат суми."
+],
+
+[
+"Функція — це залежність, за якої кожному значенню незалежної змінної відповідає єдине значення залежної змінної.",
+"Функцію можна задати формулою, таблицею, графіком або словесним описом.",
+"Графік функції — це множина точок координатної площини, координати яких відповідають залежності між змінними.",
+"Лінійна функція має вигляд y=kx+b. Її графіком є пряма."
+],
+
+[
+"Рівняння з двома змінними містить дві невідомі. Його розв'язком є пара чисел, яка перетворює рівняння на правильну рівність.",
+"Лінійне рівняння з двома змінними має вигляд ax+by=c. Його графіком є пряма.",
+"Система рівнянь — це кілька рівнянь, які потрібно розв'язати одночасно. Графічний метод полягає в пошуку точки перетину графіків.",
+"Метод підстановки: з одного рівняння виражають одну змінну та підставляють отриманий вираз в інше рівняння.",
+"Метод додавання: рівняння додають або віднімають так, щоб одна зі змінних зникла.",
+"Для розв'язування задач за допомогою систем рівнянь позначають дві невідомі величини та складають два рівняння за умовою."
+]
+
+];
+
+/* =====================================================
+   ЗАВДАННЯ
+   П'ЯТЬ ЗАВДАНЬ ДЛЯ КОЖНОЇ ТЕМИ
+===================================================== */
+
+const taskBank = [
+
+/* МОДУЛЬ 1 */
+
+[
+[
+["Який запис є буквеним виразом?",["12+8","5·7","3x+4","25-10"],2,"Буквений вираз містить змінну. Тут це x."],
+["Якщо a=4, знайди значення 3a+2.",["10","12","14","16"],2,"3·4+2=12+2=14."],
+["Який вираз означає число, збільшене в 5 разів?",["x+5","x-5","5x","x:5"],2,"Збільшити в 5 разів означає помножити на 5."],
+["Який запис є числовим виразом?",["a+7","x-2","8·6+3","5b"],2,"Числовий вираз містить тільки числа та знаки дій."],
+["Як записати суму числа x і його подвоєного значення?",["x+2","2x","x+2x","x·2"],2,"Подвоєне число — 2x. Сума — x+2x."]
+],
+[
+["Яке число є коренем рівняння x+7=12?",["3","4","5","6"],2,"12−7=5."],
+["Розв'яжи: 3x=21.",["6","7","8","9"],1,"x=21:3=7."],
+["Знайди x: 2x+4=14.",["4","5","6","7"],1,"2x=10, тому x=5."],
+["Розв'яжи: 5x−10=15.",["3","4","5","6"],2,"5x=25, x=5."],
+["Знайди корінь: 4(x−2)=12.",["3","4","5","6"],2,"x−2=3, отже x=5."]
+],
+[
+["Одне число на 8 більше за інше. Менше число позначили x. Як записати більше?",["x−8","8x","x+8","x:8"],2,"Більше число дорівнює x+8."],
+["Периметр квадрата зі стороною a:",["a+4","2a","4a","a²"],2,"Периметр квадрата — чотири сторони."],
+["Купили 3 однакові зошити по x грн. Вартість:",["x+3","3x","x−3","x:3"],1,"Три зошити по x гривень коштують 3x."],
+["Задумали число, помножили на 2 і додали 7. Отримали 19. Яке число задумали?",["5","6","7","8"],1,"2x+7=19, x=6."],
+["Батькові x років, син на 25 років молодший. Вік сина:",["x+25","25x","x−25","x:25"],2,"Син молодший, тому віднімаємо 25."]
+],
+[
+["Які вирази тотожно рівні?",["2(x+3) і 2x+6","x+2 і 2x","3x і x+3","x² і 2x"],0,"2(x+3)=2x+6 за розподільною властивістю."],
+["Чому дорівнює 3(a+2)?",["3a+2","3a+6","a+6","5a"],1,"3·a+3·2=3a+6."],
+["Спрости: 5x+2x.",["7","10x","7x","3x"],2,"5x і 2x — подібні доданки."],
+["Який вираз тотожно дорівнює 4x−8?",["4(x−2)","4(x+2)","2(4x−8)","x−4"],0,"4(x−2)=4x−8."],
+["Обери правильну тотожність.",["a+b=ab","a(a+b)=a²+ab","a²+a²=a⁴","a+b=a−b"],1,"За розподільною властивістю a(a+b)=a²+ab."]
+],
+[
+["Обчисли 2³.",["6","8","9","12"],1,"2³=2·2·2=8."],
+["Чому дорівнює 5²?",["10","15","20","25"],3,"5²=5·5=25."],
+["Вкажи основу степеня 7⁴.",["4","7","28","11"],1,"Основа степеня — 7."],
+["Скільки множників 3 містить запис 3⁵?",["3","4","5","8"],2,"Показник 5 означає п'ять однакових множників."],
+["Обчисли (−2)².",["−4","−2","2","4"],3,"(−2)·(−2)=4."]
+],
+[
+["Обчисли 2³·2².",["2⁵","2⁶","2","2¹"],0,"Показники додаємо: 3+2=5."],
+["Обчисли 5⁴:5².",["5⁶","5²","5⁸","5"],1,"Показники віднімаємо: 4−2=2."],
+["Обчисли (3²)³.",["3⁵","3⁶","3⁹","3"],1,"Показники множимо: 2·3=6."],
+["Запиши (2·5)².",["2²·5²","2·5²","2²·5","10"],0,"Степінь добутку: 2²·5²."],
+["Обчисли 2⁴·2³:2⁵.",["2²","2³","2⁴","2¹²"],0,"4+3−5=2."]
+],
+[
+["Який вираз є одночленом?",["x+3","2ab","a−b","x:y"],1,"Одночлен — добуток чисел і змінних."],
+["Коефіцієнт одночлена −7a²b:",["7","−7","2","−2"],1,"Числовий множник — −7."],
+["Стандартний вигляд одночлена:",["a·3·b","3ab","a+b+3","3a+b"],1,"Числовий коефіцієнт записують першим."],
+["Який степінь одночлена 4x²y³?",["2","3","5","6"],2,"Степінь одночлена: 2+3=5."],
+["Спрости: 2a·3a².",["5a³","6a²","6a³","6a"],2,"2·3=6, а a·a²=a³."]
+],
+[
+["Скільки членів має 3x²+2x−5?",["1","2","3","4"],2,"Члени: 3x², 2x, −5."],
+["Який многочлен записано у стандартному вигляді?",["2x+3x²","3x²+2x−1","x·2+1","2(x+1)"],1,"Стандартний вигляд — сума одночленів."],
+["Степінь многочлена 5x³+2x²−7:",["1","2","3","5"],2,"Найбільший степінь одночлена — 3."],
+["Які члени подібні?",["3x і 3y","2a² і 5a²","x і x²","4ab і 4a"],1,"Подібні члени мають однакову буквенную частину."],
+["Скільки членів має многочлен 4a²b−3ab+8?",["1","2","3","4"],2,"Три члени: 4a²b, −3ab, 8."]
+],
+[
+["Спрости: (2x+3)+(4x+5).",["6x+8","6x+2","2x+8","8x+6"],0,"2x+4x=6x; 3+5=8."],
+["Спрости: (7a+4)−(2a+1).",["5a+5","9a+3","5a+3","5a−3"],2,"7a−2a=5a; 4−1=3."],
+["Розкрий дужки: 3(x+4).",["3x+4","3x+12","x+12","3x−12"],1,"3·x+3·4=3x+12."],
+["Спрости: 5x−2x+7.",["3x+7","7x","3x−7","10x"],0,"5x−2x=3x."],
+["Спрости: 2(a+3)−(a−1).",["a+5","a+7","3a+5","a−7"],1,"2a+6−a+1=a+7."]
+],
+[
+["Розкрий дужки: 3x(x+2).",["3x²+2","3x²+6x","3x+6","3x²+2x"],1,"3x·x+3x·2=3x²+6x."],
+["Обчисли: 2a(3a−4).",["6a²−8a","5a²−4a","6a−8","6a²−4"],0,"2a·3a=6a²; 2a·(−4)=−8a."],
+["Розкрий дужки: −2x(x−5).",["−2x²−10x","−2x²+10x","2x²−10x","−2x+10"],1,"−2x·x=−2x²; −2x·(−5)=10x."],
+["Спрости: 4a(2a+3).",["8a²+12a","6a²+3a","8a+12","8a²+3"],0,"4a·2a=8a²; 4a·3=12a."],
+["Розкрий дужки: 5y(2y−3).",["10y²−15y","7y²−3y","10y−15","10y²−3"],0,"5y·2y=10y²; 5y·(−3)=−15y."]
+],
+[
+["Розкрий дужки: (x+2)(x+3).",["x²+5x+6","x²+6","x²+5x","x²−5x+6"],0,"x²+3x+2x+6=x²+5x+6."],
+["Обчисли (a+1)(a+4).",["a²+5a+4","a²+4","a²+3a+4","a²+5"],0,"a²+4a+a+4=a²+5a+4."],
+["Розкрий дужки: (x−2)(x+2).",["x²+4","x²−4","x²−2","x²+2"],1,"Це різниця квадратів."],
+["Спрости: (a+3)(a−1).",["a²+2a−3","a²+4a+3","a²−2a−3","a²+3"],0,"a²−a+3a−3=a²+2a−3."],
+["Розкрий дужки: (2x+1)(x+3).",["2x²+7x+3","2x²+6x+3","2x²+4x+3","2x²+7x"],0,"2x²+6x+x+3=2x²+7x+3."]
+],
+[
+["Винеси спільний множник: 6x+12.",["6(x+2)","3(x+12)","2(6x+6)","6(x+12)"],0,"Спільний множник — 6."],
+["Розклади: 8a²+4a.",["4a(2a+1)","4(2a²+1)","8a(a+4)","4a(2a+4)"],0,"Спільний множник — 4a."],
+["Розклади: 15x³−5x².",["5x²(3x−1)","5x(3x−1)","15x²(x−5)","5x²(3x+1)"],0,"Виносимо 5x²."],
+["Винеси множник: 9ab+12ac.",["3a(3b+4c)","3(3ab+4ac)","a(9b+12)","9a(b+12c)"],0,"Спільний множник — 3a."],
+["Розклади: 14m²n−21mn².",["7mn(2m−3n)","7m(2mn−3n)","14mn(m−n)","7mn(2m+3n)"],0,"Спільний множник — 7mn."]
+],
+[
+["Який вираз можна згрупувати?",["ax+ay+bx+by","a+b","x²","5x"],0,"Чотири члени можна об'єднати попарно."],
+["Розклади: ax+ay+bx+by.",["(a+b)(x+y)","(a+x)(b+y)","ab+xy","(a−b)(x−y)"],0,"a(x+y)+b(x+y)=(a+b)(x+y)."],
+["Розклади: 3x+3y+ax+ay.",["(3+a)(x+y)","(3+x)(a+y)","3a(x+y)","(3−a)(x+y)"],0,"3(x+y)+a(x+y)=(3+a)(x+y)."],
+["Розклади: x²+3x+2x+6.",["(x+2)(x+3)","(x+6)(x+1)","x(x+5)+6","(x−2)(x−3)"],0,"Групуємо: x(x+3)+2(x+3)."],
+["Розклади: 2a+2b+ax+bx.",["(a+b)(x+2)","(a+x)(b+2)","2(a+b+x)","(a−b)(x+2)"],0,"2(a+b)+x(a+b)=(a+b)(x+2)."]
+],
+[
+["Обчисли (a−b)(a+b).",["a²+b²","a²−b²","a²−2ab+b²","a−b"],1,"Добуток суми та різниці — різниця квадратів."],
+["Обчисли (x−3)(x+3).",["x²+9","x²−9","x²−6x+9","x²+6x+9"],1,"x²−3²=x²−9."],
+["Який вираз дорівнює (m−5)(m+5)?",["m²+25","m²−25","m²−10m+25","m²+10m+25"],1,"Це різниця квадратів."],
+["Обчисли 21·19.",["389","399","400","409"],1,"21·19=(20+1)(20−1)=400−1=399."],
+["Розкрий дужки: (2x−y)(2x+y).",["4x²−y²","4x²+y²","2x²−y²","4x²−4xy+y²"],0,"(2x)²−y²=4x²−y²."]
+],
+[
+["Розклади: x²−16.",["(x−4)(x+4)","(x−8)(x+2)","(x−4)²","(x+4)²"],0,"Різниця квадратів: x²−4²."],
+["Розклади: 25a²−b².",["(5a−b)(5a+b)","(25a−b)(a+b)","(5a−b)²","(5a+b)²"],0,"25a²=(5a)²."],
+["Який вираз є різницею квадратів?",["x²+9","x²−9","x²+6x+9","x²−6x+9"],1,"Різниця квадратів — x²−9."],
+["Розклади: 49−x².",["(7−x)(7+x)","(7−x)²","(49−x)(49+x)","(x−7)²"],0,"49=7²."],
+["Розклади: 9a²−4b².",["(3a−2b)(3a+2b)","(9a−2b)(a+2b)","(3a−2b)²","(3a+2b)²"],0,"9a²=(3a)², 4b²=(2b)²."]
+],
+[
+["Розкрий (a+b)².",["a²+b²","a²+2ab+b²","a²−2ab+b²","a²+ab+b²"],1,"Квадрат суми: a²+2ab+b²."],
+["Розкрий (x−3)².",["x²−9","x²−6x+9","x²+6x+9","x²−3x+9"],1,"x²−2·x·3+9."],
+["Обчисли (m+4)².",["m²+8m+16","m²+16","m²+4m+16","m²−8m+16"],0,"m²+2·m·4+16."],
+["Обчисли (2x−1)².",["4x²−1","4x²−4x+1","4x²+4x+1","2x²−4x+1"],1,"(2x)²−2·2x·1+1."],
+["Який запис правильний?",["(a−b)²=a²−b²","(a+b)²=a²+2ab+b²","(a+b)²=a²+b²","(a−b)²=a²+2ab+b²"],1,"Це формула квадрата суми."]
+],
+[
+["Який тричлен є квадратом суми?",["x²+6x+9","x²−6x+9","x²+9","x²+3x+9"],0,"x²+6x+9=(x+3)²."],
+["Перетвори x²−10x+25.",["(x+5)²","(x−5)²","(x−25)²","(x−10)²"],1,"Це квадрат різниці: (x−5)²."],
+["Який вираз дорівнює (a+4)²?",["a²+4a+16","a²+8a+16","a²+16","a²−8a+16"],1,"a²+2·a·4+16."],
+["Перетвори y²+12y+36.",["(y+6)²","(y−6)²","(y+12)²","(y+3)²"],0,"12y=2·y·6, 36=6²."],
+["Перетвори 4x²−12x+9.",["(2x+3)²","(2x−3)²","(4x−3)²","(2x−9)²"],1,"4x²=(2x)², 9=3², середній член −12x."]
+],
+[
+["Розклади x³+8.",["(x+2)(x²−2x+4)","(x−2)(x²+2x+4)","(x+2)³","(x−2)³"],0,"Сума кубів: (x+2)(x²−2x+4)."],
+["Розклади x³−27.",["(x−3)(x²+3x+9)","(x+3)(x²−3x+9)","(x−3)³","(x+3)³"],0,"Різниця кубів: (x−3)(x²+3x+9)."],
+["Який вираз є сумою кубів?",["a³+b³","a²+b²","a³−b³","a+b"],0,"Сума кубів має вигляд a³+b³."],
+["Розклади 8a³+1.",["(2a+1)(4a²−2a+1)","(2a−1)(4a²+2a+1)","(2a+1)³","(8a+1)³"],0,"8a³=(2a)³, 1=1³."],
+["Розклади 27x³−y³.",["(3x−y)(9x²+3xy+y²)","(3x+y)(9x²−3xy+y²)","(3x−y)³","(27x−y)(x+y)"],0,"Різниця кубів."]
+],
+[
+["З чого найкраще почати розкладання 6x²+12x?",["Формула кубів","Винести спільний множник","Квадрат суми","Метод додавання"],1,"Спільний множник 6x."],
+["Розклади x²−25.",["(x−5)(x+5)","(x−25)(x+1)","(x−5)²","(x+5)²"],0,"Використовуємо різницю квадратів."],
+["Розклади x²+6x+9.",["(x+3)²","(x−3)²","(x+9)²","(x+6)²"],0,"Це квадрат суми."],
+["Розклади ax+ay+2x+2y.",["(a+2)(x+y)","(a+x)(y+2)","(a−2)(x+y)","(a+2)(x−y)"],0,"Групуємо: a(x+y)+2(x+y)."],
+["Який спосіб найкраще застосувати до 4x²−16?",["Винесення 4","Сума кубів","Метод підстановки","Додавання"],0,"Спочатку винесемо 4: 4(x²−4), потім різницю квадратів."]
+]
+
+],
+
+/* МОДУЛЬ 2 */
+
+[
+[
+["Яка величина залежить від x у формулі y=3x?",["x","y","3","Немає змінних"],1,"y залежить від значення x."],
+["Як називають незалежну змінну?",["Функція","Аргумент","Графік","Коефіцієнт"],1,"Незалежна змінна — аргумент."],
+["Якщо y=2x, знайди y при x=4.",["4","6","8","10"],2,"y=2·4=8."],
+["Чи є залежність y=x² функцією?",["Так","Ні","Лише при x=0","Неможливо визначити"],0,"Кожному x відповідає єдине y."],
+["Якщо y=10−x, знайди y при x=7.",["2","3","7","17"],1,"10−7=3."]
+],
+[
+["Який запис задає функцію формулою?",["y=2x+1","Таблиця чисел","Малюнок","Опис словами"],0,"Формула містить математичний запис залежності."],
+["Який спосіб задання функції містить рядки x та y?",["Словесний","Графічний","Табличний","Формульний"],2,"Це таблиця значень."],
+["Для y=3x знайди y при x=2.",["3","5","6","9"],2,"3·2=6."],
+["Якщо таблиця містить пари (1;2), (2;4), (3;6), яка формула підходить?",["y=x+1","y=2x","y=x²","y=3x"],1,"Кожне значення y удвічі більше за x."],
+["Який спосіб задання функції використовує координатну площину?",["Графічний","Табличний","Словесний","Формульний"],0,"Графік зображують на координатній площині."]
+],
+[
+["Яка вісь є горизонтальною?",["Oy","Ox","Обидві","Жодна"],1,"Ox — горизонтальна вісь абсцис."],
+["Координати точки записують у вигляді:",["(y;x)","(x;y)","x+y","x·y"],1,"Спочатку абсциса x, потім ордината y."],
+["У якій чверті точка (2;3)?",["I","II","III","IV"],0,"Обидві координати додатні."],
+["Яка точка лежить на осі Ox?",["(0;5)","(3;0)","(2;2)","(−1;4)"],1,"На осі Ox координата y дорівнює нулю."],
+["Для y=2x побудовано точку при x=3. Її координати:",["(3;2)","(2;3)","(3;6)","(6;3)"],2,"y=2·3=6."]
+],
+[
+["Яка формула задає лінійну функцію?",["y=kx+b","y=x²","y=1/x","y=x³"],0,"Лінійна функція має вигляд y=kx+b."],
+["Який графік лінійної функції?",["Коло","Пряма","Парабола","Трикутник"],1,"Графік лінійної функції — пряма."],
+["У функції y=3x+2 коефіцієнт k дорівнює:",["2","3","5","1"],1,"k — коефіцієнт при x."],
+["Знайди y=2x−1 при x=3.",["4","5","6","7"],1,"2·3−1=5."],
+["Який графік паралельний y=2x+1?",["y=2x−4","y=3x+1","y=−2x+1","y=x+2"],0,"Паралельні прямі мають однаковий коефіцієнт k."]
+]
+
+],
+
+/* МОДУЛЬ 3 */
+
+[
+[
+["Яка пара є розв'язком x+y=7?",["(2;5)","(2;4)","(3;5)","(1;5)"],0,"2+5=7."],
+["Чи є пара (3;2) розв'язком x+2y=7?",["Так","Ні","Лише x","Лише y"],0,"3+2·2=7."],
+["Яке рівняння містить дві змінні?",["x+3=5","x+y=10","2x=8","a=4"],1,"Тут є дві змінні x та y."],
+["Знайди y, якщо x=4 і x+y=9.",["3","4","5","6"],2,"y=9−4=5."],
+["Яка пара задовольняє рівняння 2x+y=8?",["(2;4)","(1;5)","(3;3)","(4;1)"],0,"2·2+4=8."]
+],
+[
+["Яке рівняння є лінійним із двома змінними?",["x²+y=5","2x+3y=12","xy=6","x³+y=1"],1,"Степінь кожної змінної не перевищує 1."],
+["Яким є графік 2x+y=4?",["Коло","Пряма","Парабола","Точка"],1,"Графік лінійного рівняння — пряма."],
+["Яка точка належить графіку x+y=5?",["(2;3)","(2;4)","(1;3)","(5;1)"],0,"2+3=5."],
+["Знайди y з рівняння x+y=8.",["y=8+x","y=8−x","y=x−8","y=8x"],1,"Переносимо x: y=8−x."],
+["Яка точка належить графіку 2x−y=1?",["(1;1)","(2;1)","(0;1)","(1;2)"],0,"2·1−1=1."]
+],
+[
+["Що є розв'язком системи рівнянь?",["Будь-яке число","Пара, що задовольняє обидва рівняння","Лише перше рівняння","Сума коренів"],1,"Пара повинна задовольняти обидва рівняння."],
+["Де знаходиться розв'язок системи графічно?",["У початку координат","У точці перетину прямих","На осі Ox","На осі Oy"],1,"Спільна точка графіків є розв'язком."],
+["Якщо прямі перетинаються в одній точці, система має:",["Жодного розв'язку","Один розв'язок","Безліч розв'язків","Два розв'язки"],1,"Одна точка перетину — один розв'язок."],
+["Якщо прямі паралельні, система має:",["Один розв'язок","Два розв'язки","Жодного розв'язку","Безліч"],2,"Паралельні різні прямі не перетинаються."],
+["Якщо прямі збігаються, система має:",["Один розв'язок","Безліч розв'язків","Жодного","Два"],1,"Кожна точка прямої є спільною."]
+],
+[
+["З рівняння x+y=9 вирази y.",["y=x−9","y=9−x","y=9+x","y=9x"],1,"y=9−x."],
+["Розв'яжи систему: y=x; x+y=8.",["(2;6)","(4;4)","(3;5)","(5;3)"],1,"x+x=8, x=4, y=4."],
+["Розв'яжи: y=2x; x+y=9.",["(2;7)","(3;6)","(4;5)","(5;4)"],1,"x+2x=9, x=3, y=6."],
+["Якщо y=5−x і x=2, то y дорівнює:",["2","3","5","7"],1,"5−2=3."],
+["Розв'яжи систему: y=x+1; x+y=5.",["(1;2)","(2;3)","(3;2)","(4;1)"],1,"x+x+1=5, x=2, y=3."]
+],
+[
+["Яку дію використовують у методі додавання?",["Додають рівняння","Множать змінні","Ділять графіки","Будують коло"],0,"Рівняння додають або віднімають почленно."],
+["Якщо x+y=7 і x−y=1, то після додавання:",["2x=8","2y=8","x=7","y=1"],0,"y і −y взаємно знищуються."],
+["Розв'яжи систему: x+y=10; x−y=2.",["(6;4)","(4;6)","(5;5)","(7;3)"],0,"2x=12, x=6, y=4."],
+["Якщо 2x+2y=12, то після ділення на 2:",["x+y=6","x+y=12","2x+y=6","x−y=6"],0,"Ділимо обидві частини рівняння на 2."],
+["Розв'яжи: 2x+y=8; x−y=1.",["(3;2)","(2;4)","(4;1)","(1;6)"],0,"Додаємо рівняння: 3x=9, x=3, y=2."]
+],
+[
+["У задачі дві невідомі величини. Скільки змінних зазвичай вводять?",["Одну","Дві","Три","Жодної"],1,"Для двох невідомих вводять дві змінні."],
+["Сума двох чисел 12, різниця 4. Яка система підходить?",["x+y=12; x−y=4","x+y=4; x−y=12","xy=12","x+y=16"],0,"Сума дорівнює 12, різниця — 4."],
+["Два квитки коштують 100 грн. Один на 20 грн дорожчий. Яка система?",["x+y=100; x−y=20","x+y=20; x−y=100","xy=100","x−y=100"],0,"Сума цін 100, різниця 20."],
+["Сума двох чисел 15. Одне вдвічі більше за інше. Яка рівність описує умову?",["x+y=15; x=2y","x−y=15; x=2y","xy=15","x+y=2"],0,"Сума — 15, більше число удвічі більше."],
+["У двох коробках 30 олівців. У першій на 6 більше. Скільки в кожній?",["18 і 12","16 і 14","20 і 10","15 і 15"],0,"x+y=30, x−y=6. Отже, 18 і 12."]
+]
+
+]
+
+];
+
+/* =====================================================
+   ПОБУДОВА КУРСУ
+===================================================== */
+
+let currentModule=0;
+let currentTopic=0;
+let currentTask=0;
+let currentTab="theory";
+let selectedAnswer=null;
+let checked=false;
+let lessonCorrect=0;
+
+let progress=JSON.parse(localStorage.getItem("algebra7progress")||"{}");
+let score=Number(localStorage.getItem("algebra7score")||0);
+
+function save(){
+localStorage.setItem("algebra7progress",JSON.stringify(progress));
+localStorage.setItem("algebra7score",score);
+updateProgress();
+}
+
+function totalTopics(){
+return modules.reduce((s,m)=>s+m.topics.length,0);
+}
+
+function completedCount(){
+return Object.values(progress).filter(x=>x.done).length;
+}
+
+function updateProgress(){
+let percent=Math.round(completedCount()/totalTopics()*100);
+document.getElementById("progressText").textContent=percent+"%";
+document.getElementById("progressFill").style.width=percent+"%";
+document.getElementById("totalScore").textContent=score;
+}
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("open");
+document.getElementById("drawerBg").classList.toggle("show");
+}
+
+function closeMenu(){
+document.getElementById("sidebar").classList.remove("open");
+document.getElementById("drawerBg").classList.remove("show");
+}
+
+/* МЕНЮ */
+
+function renderMenu(){
+let html="";
+modules.forEach((m,i)=>{
+html+=`
+<button class="module-btn" onclick="openModule(${i})">
+<span class="module-num">${i+1}</span>
+<span>${m.title}</span>
+</button>`;
+});
+document.getElementById("moduleList").innerHTML=html;
+}
+
+/* ГОЛОВНА */
+
+function renderHome(){
+closeMenu();
+document.getElementById("topTitle").textContent="Головна сторінка";
+
+let html=`
+<div class="welcome">
+<h1>Вітаємо на курсі алгебри! 📘</h1>
+<p>7 клас · Інтерактивне навчання</p>
+<p style="margin-top:12px">Вивчай теорію, розбирай приклади, виконуй завдання та перевіряй свої знання. Пройди всі три модулі й стань справжнім знавцем алгебри!</p>
+</div>
+
+<div class="section-heading">
+<h2>Навчальні модулі</h2>
+<span style="font-size:12px;color:#8993a6">3 модулі · 29 уроків</span>
+</div>
+
+<div class="module-grid">`;
+
+modules.forEach((m,i)=>{
+let count=m.topics.length;
+let done=m.topics.filter((t,j)=>progress[i+"-"+j]?.done).length;
+
+html+=`
+<div class="module-card" onclick="openModule(${i})">
+<div class="card-number">МОДУЛЬ ${i+1}</div>
+<h3>${m.title}</h3>
+<p>${count} підмодулів · Виконано ${done} із ${count}</p>
+</div>`;
+});
+
+html+=`</div>`;
+
+document.getElementById("content").innerHTML=html;
+}
+
+/* СПИСОК УРОКІВ */
+
+function openModule(index){
+currentModule=index;
+closeMenu();
+
+let m=modules[index];
+document.getElementById("topTitle").textContent="Модуль "+(index+1);
+
+let html=`
+<button class="back-btn" onclick="renderHome()">← Головне меню</button>
+
+<div class="topic-header">
+<h2>Модуль ${index+1}</h2>
+<p>${m.title}</p>
+</div>
+
+<div class="section-heading">
+<h2>Теми модуля</h2>
+<span style="font-size:12px;color:#8993a6">${m.topics.length} уроків</span>
+</div>
+
+<div class="topic-list">`;
+
+m.topics.forEach((t,j)=>{
+let done=progress[index+"-"+j]?.done;
+
+html+=`
+<div class="lesson-card" onclick="openLesson(${index},${j})">
+<div class="lesson-number">${j+1}</div>
+<div class="lesson-info">
+<h4>${t}</h4>
+<p>Теорія · Приклад · 5 завдань</p>
+</div>
+${done?'<span class="done-mark">✓</span>':'<span>›</span>'}
+</div>`;
+});
+
+html+=`</div>`;
+document.getElementById("content").innerHTML=html;
+}
+
+/* ВІДКРИТТЯ УРОКУ */
+
+function openLesson(m,t){
+currentModule=m;
+currentTopic=t;
+currentTask=0;
+currentTab="theory";
+selectedAnswer=null;
+checked=false;
+lessonCorrect=0;
+
+closeMenu();
+renderLesson();
+}
+
+function getTopicTheory(){
+return theory[currentModule][currentTopic];
+}
+
+function getTasks(){
+return taskBank[currentModule][currentTopic];
+}
+
+function renderLesson(){
+let title=modules[currentModule].topics[currentTopic];
+
+document.getElementById("topTitle").textContent=
+"Модуль "+(currentModule+1);
+
+let html=`
+<button class="back-btn" onclick="openModule(${currentModule})">← До списку тем</button>
+
+<h1 class="lesson-title">${title}</h1>
+
+<div class="tabs">
+<button class="tab ${currentTab==="theory"?"active":""}" onclick="switchTab('theory')">📖 Теорія</button>
+<button class="tab ${currentTab==="example"?"active":""}" onclick="switchTab('example')">✏️ Приклад</button>
+<button class="tab ${currentTab==="tasks"?"active":""}" onclick="switchTab('tasks')">🎯 Завдання</button>
+</div>
+
+<div class="lesson-panel" id="lessonPanel"></div>
+`;
+
+document.getElementById("content").innerHTML=html;
+renderPanel();
+}
+
+function switchTab(tab){
+currentTab=tab;
+renderLesson();
+}
+
+/* НАПОВНЕННЯ ВКЛАДОК */
+
+function renderPanel(){
+
+let panel=document.getElementById("lessonPanel");
+let text=getTopicTheory();
+
+if(currentTab==="theory"){
+
+panel.innerHTML=`
+<div class="theory-text">
+<h3>📚 Вивчаємо тему</h3>
+<p>${text}</p>
+<div class="formula">
+Запам'ятай: уважно прочитай правило та спробуй пояснити його своїми словами.
+</div>
+<p>Під час виконання завдань звертай увагу на математичні правила, порядок дій та правильність запису.</p>
+</div>
+
+<div class="lesson-controls">
+<button class="btn btn-secondary" onclick="switchTab('example')">До прикладу →</button>
+<button class="btn btn-primary" onclick="switchTab('tasks')">Почати завдання</button>
+</div>
+`;
+
+}
+
+if(currentTab==="example"){
+
+let example=makeExample();
+
+panel.innerHTML=`
+<div class="theory-text">
+<h3>✏️ Розглянемо приклад</h3>
+<div class="example">
+${example}
+</div>
+<p style="margin-top:18px">Зверни увагу на кожен крок розв'язання. Спробуй повторити його самостійно.</p>
+</div>
+
+<div class="lesson-controls">
+<button class="btn btn-secondary" onclick="switchTab('theory')">← Теорія</button>
+<button class="btn btn-primary" onclick="switchTab('tasks')">Перейти до завдань →</button>
+</div>
+`;
+
+}
+
+if(currentTab==="tasks"){
+renderTask();
+}
+
+}
+
+/* ПРИКЛАДИ */
+
+function makeExample(){
+
+const examples=[
+
+[
+"Приклад: якщо a=3, знайдемо 2a+5.<br><br>Підставляємо число замість букви:<br>2·3+5=6+5=11.<br><br><b>Відповідь: 11.</b>",
+"Розв'яжемо рівняння 2x+6=14.<br><br>2x=14−6<br>2x=8<br>x=8:2<br><b>x=4.</b>",
+"Нехай менше число — x. Більше на 5: x+5.<br><br>Якщо сума чисел 17:<br>x+x+5=17<br>2x=12<br>x=6.<br><b>Числа: 6 і 11.</b>",
+"2(x+3)=2x+6.<br><br>Множимо кожен член дужок на 2.<br><b>Відповідь: 2x+6.</b>",
+"3³=3·3·3=27.<br><b>Відповідь: 27.</b>",
+"a²·a³=a⁵.<br><b>Показники додаємо: 2+3=5.</b>",
+"4x·2x²=8x³.<br><b>Множимо коефіцієнти та додаємо показники.</b>",
+"3x²+2x−5 має три члени.<br>Найбільший степінь — 2.",
+"(3x+2)+(x+5)=4x+7.<br><b>Зводимо подібні доданки.</b>",
+"2x(x+3)=2x²+6x.<br><b>Множимо кожен член дужок.</b>",
+"(x+2)(x+3)=x²+5x+6.",
+"6x+12=6(x+2).<br><b>Виносимо спільний множник.</b>",
+"ax+ay+bx+by=a(x+y)+b(x+y)=(a+b)(x+y).",
+"(a−b)(a+b)=a²−b².",
+"x²−25=(x−5)(x+5).",
+"(x+3)²=x²+6x+9.",
+"x²+8x+16=(x+4)².",
+"x³+8=(x+2)(x²−2x+4).",
+"Спочатку винесемо спільний множник, потім застосуємо формулу різниці квадратів."
+],
+[
+"Якщо y=2x+1 і x=3, то y=2·3+1=7.",
+"Для y=3x складемо таблицю: x=1, y=3; x=2, y=6; x=3, y=9.",
+"Для y=x+2 точки: (0;2), (1;3), (2;4). Через них проводимо пряму.",
+"y=2x+1. Якщо x=0, y=1. Якщо x=1, y=3. Будуємо пряму через ці точки."
+],
+[
+"Рівняння x+y=8 має розв'язок (3;5), бо 3+5=8.",
+"2x+y=6. Якщо x=1, то y=4. Отримуємо точку (1;4).",
+"Система x+y=6 та x−y=2. Додаємо: 2x=8, x=4, y=2.",
+"y=x+2. Підставляємо в x+y=8: x+x+2=8, x=3, y=5.",
+"x+y=10, x−y=4. Додаємо: 2x=14, x=7, y=3.",
+"Нехай ціни товарів x та y. Складаємо два рівняння за умовою задачі."
+]
+
+];
+
+return examples[currentModule][currentTopic] || "Уважно застосовуй правило з теорії. Перевір результат підстановкою.";
+}
+
+/* ЗАВДАННЯ */
+
+function renderTask(){
+
+let panel=document.getElementById("lessonPanel");
+let tasks=getTasks();
+let q=tasks[currentTask];
+
+if(!q){
+panel.innerHTML="Завдання не знайдено.";
+return;
+}
+
+let html=`
+<div class="task-counter">
+Завдання ${currentTask+1} із 5
+</div>
+
+<div class="question">${q[0]}</div>
+
+<div class="answers">
+`;
+
+q[1].forEach((a,i)=>{
+let cls="answer";
+if(selectedAnswer===i){
+cls+=" selected";
+}
+if(checked && i===q[2]){
+cls+=" correct";
+}
+if(checked && selectedAnswer===i && i!==q[2]){
+cls+=" wrong";
+}
+
+html+=`
+<button class="${cls}" ${checked?"disabled":""} onclick="selectAnswer(${i})">
+${String.fromCharCode(65+i)}. ${a}
+</button>`;
+});
+
+html+=`
+</div>
+
+<div class="feedback ${checked?"show":""} ${checked?(selectedAnswer===q[2]?"good":"bad"):""}">
+${checked?(selectedAnswer===q[2]?"✓ Правильно! ":"✗ Неправильно. ")+q[3]:""}
+</div>
+
+<div class="lesson-controls">
+<button class="btn btn-secondary" onclick="previousTask()" ${currentTask===0?"disabled":""}>← Назад</button>
+
+${!checked?
+'<button class="btn btn-primary" onclick="checkAnswer()" '+(selectedAnswer===null?"disabled":"")+'>Перевірити</button>':
+'<button class="btn btn-primary" onclick="nextTask()">Наступне →</button>'
+}
+</div>
+`;
+
+panel.innerHTML=html;
+}
+
+function selectAnswer(i){
+if(checked)return;
+selectedAnswer=i;
+renderTask();
+}
+
+function checkAnswer(){
+
+if(selectedAnswer===null)return;
+
+checked=true;
+
+let q=getTasks()[currentTask];
+
+if(selectedAnswer===q[2]){
+lessonCorrect++;
+score+=10;
+}
+
+renderTask();
+save();
+}
+
+function previousTask(){
+if(currentTask>0){
+currentTask--;
+selectedAnswer=null;
+checked=false;
+renderTask();
+}
+}
+
+function nextTask(){
+
+if(currentTask<4){
+currentTask++;
+selectedAnswer=null;
+checked=false;
+renderTask();
+}else{
+finishLesson();
+}
+
+}
+
+/* ЗАВЕРШЕННЯ УРОКУ */
+
+function finishLesson(){
+
+let key=currentModule+"-"+currentTopic;
+
+let old=progress[key]||{best:0,done:false};
+
+let percent=lessonCorrect*20;
+
+progress[key]={
+done:true,
+best:Math.max(old.best,percent)
+};
+
+save();
+
+document.getElementById("modalIcon").textContent=
+lessonCorrect>=4?"🏆":"📚";
+
+document.getElementById("modalTitle").textContent=
+lessonCorrect>=4?"Чудовий результат!":"Урок завершено!";
+
+document.getElementById("modalText").textContent=
+"Ти виконав усі п'ять завдань. Правильних відповідей: "+lessonCorrect+" із 5.";
+
+document.getElementById("modalResult").textContent=
+percent+"%";
+
+document.getElementById("modalBg").classList.add("show");
+
+}
+
+function closeModal(){
+
+document.getElementById("modalBg").classList.remove("show");
+
+openModule(currentModule);
+
+}
+
+/* ЗАПУСК */
+
+renderMenu();
+updateProgress();
+renderHome();
+
+</script>
+</body>
+</html>
